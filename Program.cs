@@ -21,6 +21,8 @@ namespace WindowTracking
 //        [DllImport("user32.dll")]
 //        static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
 
+        const int MAX_IDLE_SECONDS = 15;
+        static bool _userIsIdle = false;
 
         static void Main(string[] args) {
             IntPtr currentWindowHandle = IntPtr.Zero;
@@ -52,8 +54,18 @@ namespace WindowTracking
                         Console.WriteLine("no process with id" + pID);
                     }
                 }
+                TimeSpan timeSinceLastInput = (DateTime.Now - InputInformation.GetLastInputTime());
+                if (!_userIsIdle && timeSinceLastInput.Seconds > MAX_IDLE_SECONDS) {
+                    Console.WriteLine("user has left the workstation");
+                    _userIsIdle = true;
+                }
+                else if (_userIsIdle && timeSinceLastInput.Seconds < MAX_IDLE_SECONDS) {
+                    Console.WriteLine("user is back");
+                    _userIsIdle = false;
+                }
                 Thread.Sleep(250);
             }
         }
+        
     }
 }
