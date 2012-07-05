@@ -29,9 +29,11 @@ namespace WindowTracking
                 currentWindowHandle = GetForegroundWindow();
                 if (currentWindowHandle.ToInt32() != lastWindowHandle.ToInt32()) {
                     lastWindowHandle = currentWindowHandle;
+
                     uint outPid;
                     GetWindowThreadProcessId(currentWindowHandle, out outPid);
                     int pID =(int)outPid;
+
                     try {
                         Process p = Process.GetProcessById(pID);
                         Console.WriteLine("focus on: [" + p.ProcessName + "] pID: " + pID);
