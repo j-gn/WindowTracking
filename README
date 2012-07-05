@@ -1,3 +1,6 @@
 Window Tracking
+A c# project for windows. A console app tracking which window is active.
 
-What's the name of the active window? this application will tell you
+ What's the name of the active window? 
+
+ This application will tell you!
