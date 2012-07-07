@@ -12,17 +12,13 @@ namespace WindowTracking
     {
         [DllImport("User32.dll")]
         private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
-
         public static DateTime GetLastInputTime()
         {
             var lastInputInfo = new LASTINPUTINFO();
             lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
-
             GetLastInputInfo(ref lastInputInfo);
-
             return DateTime.Now.AddMilliseconds(-(Environment.TickCount - lastInputInfo.dwTime));
         }
-
         [StructLayout(LayoutKind.Sequential)]
         internal struct LASTINPUTINFO
         {
